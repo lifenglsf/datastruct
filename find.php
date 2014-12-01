@@ -1,5 +1,6 @@
 <?php
-Class Find{
+header("content-type:text/html;chaset=utf8");
+class Find{
 	private $isFind = FALSE;
 	public function __construct(){
 

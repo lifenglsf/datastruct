@@ -1,10 +1,26 @@
 <?php
-Class linearList{
+header("content-type:text/html;chaset=utf8");
+class linearList{
 	private $sequenceTable;
 	private $MAXSIZE=10;
 	private $error;
 	private $succeMsg = array();
 	private $length;
+	public function __construct($size = 0){
+		if(!empty($size) &&($size > 0)){
+			$this -> initList();
+			for($i=0;$i<$size;$i++){
+				$item = mt_rand(1,1000);//生成一个随机数;
+				$this -> listInsert(($i+1),$item);
+			}
+			
+			
+		}
+	}
+
+	function getTable(){
+		return $this -> sequenceTable;
+	}
 	//初始化线性表
 	function initList(){
 		$this -> sequenceTable = array();
@@ -94,7 +110,7 @@ Class linearList{
 			echo "溢出";
 			exit;
 		}
-		if(isset($this -> sequenceTable) &&（is_array($this-> sequenceTable)){
+		if(isset($this -> sequenceTable)&&(is_array($this -> sequenceTable))){
 			if($i == $this -> length){
 				unset($this -> sequenceTable[$pos-1]);
 			}else{
@@ -109,75 +125,45 @@ Class linearList{
 		return $this -> sequenceTable;
 	}
 
+	function listSearch($data){
+		$isFind = FALSE;
+		for($i = 0;$i < $this -> length; $i++){
+			if($this-> sequenceTable[$i] == $data){
+				echo "查找到元素".$data."位于线性表的第".($i+1).'的位置<br/>';
+				return $i;
+				break;
+			}
+		}
+		if($this -> isFind == FALSE){
+			echo "线性表中不存在元素".$data."<br/>";
+			return 0;
+		}
+	}
 	function listTraverse(){
 
 	}
 
-	/*function initList($arr,$n){
-		if($n > MAXSIZE){
-			$this -> errno = array('msg' => '对不起，长度超出限制，最多只能'.MAXSIZE.'长度');
-		}elseif($n<0){
-			$this -> errno = array('msg' => '对不起，长度不能为负数');
-		}elseif($n == 0){
-			$this -> sequenceTable = array();
-			$this -> succeMsg = array('msg' => '你创建了一个空表');
-			$this -> length = n;
-		}else{
-			$this -> sequenceTable = $arr;
-			$this -> succeMsg = array('msg' => '你创建了一个表');
-			$this -> length = n;
-		}
-	}
-	public function initSequence(){
-		$this -> sequenceTable = array(1,2,3,4,5,6,7,89,10);
-	}
-	function addElementToSequence($pos,$data,$flag){
-		if($flag == "before"){
-
-		}elseif($flag == "after"){
-
-		}else{
-			return $this -> sequenceTable;
-		}
-	}	
-}*/
+	
 }
 
 
 $obj = new linearList();
-$list = $obj -> initList();
-//创建第一个元素
-$first = $obj -> listInsert(1,1);
-$second = $obj -> listInsert(2,2);
-$third = $obj -> listInsert(3,3);
-$fourth = $obj -> listInsert(4,4);
-$fifth = $obj -> listInsert(5,5);
-$sixth = $obj -> listInsert(6,6);
-$seventh = $obj -> listInsert(7,7);
-$eighth = $obj -> listInsert(8,8);
-$ninth = $obj -> listInsert(9,9);
-$tenth = $obj -> listInsert(10,10);
+//创建10个元素的线性表
+$obj = new linearList(10);
+$ten = $obj -> getTable();
+echo "创建10个元素的线性表，线性表数据为：".implode(',', $ten)."<br/>";
+$insert = $obj -> listInsert(3,15);
+echo "向线性表第3个位置插入15，线性表数据为：".implode(',', $insert)."<br/>";
+$delete = $obj -> listDelete(5);
+echo "删除线性表中得第5个元素，线性表数据为：".implode(',', $delete)."<br/>";
+echo "查找线性表中得是否存在5:";
+$find = $obj -> listSearch(5);
+/**
+*ps:线性表中得数据为随机生成的数据
+*程序运行结果:
+*创建10个元素的线性表，线性表数据为：943,201,705,131,697,701,720,237,112,867
+*向线性表第3个位置插入15，线性表数据为：943,201,15,705,131,697,701,720,237,112,867
+*删除线性表中得第5个元素，线性表数据为：943,201,15,705,697,701,720,237,112,867
+*查找线性表中得是否存在5:线性表中不存在元素5
 
-
-$tenth1 = $obj -> listInsert(3,15);
-print_r($first);
-echo "<hr/>";
-print_r($second);
-echo "<hr/>";
-print_r($third);
-echo "<hr/>";
-print_r($fourth);
-echo "<hr/>";
-print_r($fifth);
-echo "<hr/>";
-print_r($sixth);
-echo "<hr/>";
-print_r($seventh);
-echo "<hr/>";
-print_r($eighth);
-echo "<hr/>";
-print_r($ninth);
-echo "<hr/>";
-print_r($tenth);
-echo "<hr/>";
-print_r($tenth1);
+*/
